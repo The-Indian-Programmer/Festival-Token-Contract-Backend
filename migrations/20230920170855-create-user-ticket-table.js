@@ -10,6 +10,15 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true,
       },
+      contractId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: "contracts",
+          key: "id",
+          onDelete: "CASCADE",  
+        },
+      },
       userAddress: {
         type: Sequelize.STRING(64),
         length: 64,
@@ -17,6 +26,10 @@ module.exports = {
       },
       ticketId: {
         type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      ticketPrice: {
+        type: Sequelize.STRING(4),
         allowNull: false,
       },
       isListed: {
