@@ -117,3 +117,21 @@ module.exports.getMyTicketList = (req, res) => {
         
     });
 }
+
+module.exports.listTicket = (req, res) => {
+    let formData = req.body;
+    let schema = {
+        ticketId: 'required',
+        seller: 'required',
+        price: 'required',
+        chainId: 'required',
+        contractAddress: 'required'
+    }
+
+    const validateData = new node_validator.Validator(formData, schema);
+    validateData.check().then(async (matched) => {
+        if (!matched) return res.status(422).json({ status: false, message: msgHelper.msg('MSG002'), error: validateData.errors });
+
+        let ticketId = formData.ticketId;
+    });
+}
