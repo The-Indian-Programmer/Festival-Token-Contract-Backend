@@ -22,6 +22,15 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true,
       },
+      contractId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: "contracts",
+          key: "id",
+          onDelete: "CASCADE",  
+        },
+      },
       sellerAddress: {
         type: Sequelize.STRING(64),
         length: 64,

@@ -52,6 +52,11 @@ Ticket.belongsTo(Contract, { foreignKey: 'contractId' });
 
 Ticket.getUserTicketList = async (contractAddress, userAddress) => {
   return new Promise((resolve, reject) => {
+
+    let columns = ['id', 'userAddress', 'ticketId', 'ticketPrice', 'isListed', 'ticketBaughtFrom', 'createdAt'];
+
+    // add ticket pirce listing in nft list table
+    columns.push([sequelize.literal(`(SELECT price FROM nft_listing WHERE nft_listing.ticketId = Ticket.ticketId AND nft_listing.contractId = Ticket.contractId AND nft_listing.sellerAddress = Ticket.userAddress ORDER BY nft_listing.id DESC LIMIT 1)`), 'listedPrice'])
     Ticket.findAll({
       include: [
         {
@@ -60,7 +65,7 @@ Ticket.getUserTicketList = async (contractAddress, userAddress) => {
           where: { contractAddress }, // Add a WHERE condition for the Contract model
           attributes: []
         },
-      ], attributes: ['id', 'userAddress', 'ticketId', 'ticketPrice', 'isListed', 'ticketBaughtFrom', 'createdAt']
+      ], attributes: columns
     },
     )
       .then((tickets) => {
