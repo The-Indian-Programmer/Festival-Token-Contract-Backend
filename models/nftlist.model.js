@@ -62,6 +62,7 @@ NftListing.getAllTicketList = async function (contractId) {
       ],
       attributes: ['id', 'sellerAddress', 'ticketId', 'price', 'createdAt'],
     }).then((result) => {
+      
       resolve({ err: null, data: result })
     }).catch((err) => {
       reject({ err: err, data: null })

@@ -58,6 +58,7 @@ Ticket.getUserTicketList = async (contractAddress, userAddress) => {
     // add ticket pirce listing in nft list table
     columns.push([sequelize.literal(`(SELECT price FROM nft_listing WHERE nft_listing.ticketId = Ticket.ticketId AND nft_listing.contractId = Ticket.contractId AND nft_listing.sellerAddress = Ticket.userAddress ORDER BY nft_listing.id DESC LIMIT 1)`), 'listedPrice'])
     Ticket.findAll({
+      where: { userAddress },
       include: [
         {
           model: Contract,

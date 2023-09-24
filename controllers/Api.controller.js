@@ -6,7 +6,7 @@ const TicketModel = require("../models/ticket.model");
 const NftListing = require("../models/nftlist.model");
 
 module.exports.getContractData = (req, res) => {
-    
+
     let formData = req.body;
     let schema = {
         address: 'required',
@@ -20,9 +20,9 @@ module.exports.getContractData = (req, res) => {
 
         let info = {}
         info.columns = ['contractAddress', 'contractOwner', 'price', 'soldTickets', 'maxTickets', 'ticketName', 'ticketSymbol'];
-        
-        info.where = {contractAddress: contractAddress};
-        let getContractData = await ContractModel.findOne({where: {contractAddress: contractAddress}, attributes: info.columns});
+
+        info.where = { contractAddress: contractAddress };
+        let getContractData = await ContractModel.findOne({ where: { contractAddress: contractAddress }, attributes: info.columns });
         if (!helper.isEmpty(getContractData)) {
             return res.status(200).json({ status: true, message: msgHelper.msg('MSG017'), data: getContractData.dataValues });
         } else {
@@ -54,9 +54,9 @@ module.exports.buyTicket = (req, res) => {
         let contractAddress = formData.contractAddress;
 
         let contractInfo = {}
-        contractInfo.where = {contractAddress: contractAddress};
+        contractInfo.where = { contractAddress: contractAddress };
 
-        let getContractData = await ContractModel.findOne({where: {contractAddress: contractAddress}, attributes: ['id']});
+        let getContractData = await ContractModel.findOne({ where: { contractAddress: contractAddress }, attributes: ['id'] });
         if (helper.isEmpty(getContractData)) {
             return res.status(200).json({ status: false, message: msgHelper.msg('MSG014'), data: null });
         } else {
@@ -72,14 +72,14 @@ module.exports.buyTicket = (req, res) => {
                 createdAt: moment().format('YYYY-MM-DD HH:mm:ss'),
                 updatedAt: moment().format('YYYY-MM-DD HH:mm:ss'),
             }
-            
+
             let createTicket = await TicketModel.create(info.data);
             // return res.status(200).json({ status: true, message: msgHelper.msg('MSG017'), data: createTicket.dataValues });
 
             if (!helper.isEmpty(createTicket)) {
 
                 // decrease ticket count
-                let updateContract = await ContractModel.update({soldTickets: sequelize.literal('soldTickets + 1')}, {where: {contractAddress: contractAddress}});
+                let updateContract = await ContractModel.update({ soldTickets: sequelize.literal('soldTickets + 1') }, { where: { contractAddress: contractAddress } });
 
                 if (updateContract) {
                     return res.status(200).json({ status: true, message: msgHelper.msg('MSG017'), data: createTicket.dataValues });
@@ -90,8 +90,8 @@ module.exports.buyTicket = (req, res) => {
             } else {
                 return res.status(200).json({ status: false, message: msgHelper.msg('MSG014'), data: null });
             }
-        }       
-        
+        }
+
     });
 }
 
@@ -115,7 +115,7 @@ module.exports.getMyTicketList = (req, res) => {
         let userTicket = await TicketModel.getUserTicketList(contractAddress, userAddress);
         if (!helper.isEmpty(userTicket.err)) return res.status(200).json({ status: false, message: msgHelper.msg('MSG014'), data: null });
         return res.status(200).json({ status: true, message: msgHelper.msg('MSG017'), data: userTicket.data });
-        
+
     });
 }
 
@@ -141,9 +141,9 @@ module.exports.listTicket = (req, res) => {
         let contractAddress = formData.contractAddress;
 
         let contractInfo = {}
-        contractInfo.where = {contractAddress: contractAddress};
+        contractInfo.where = { contractAddress: contractAddress };
 
-        let getContractData = await ContractModel.findOne({where: {contractAddress: contractAddress}, attributes: ['id']});
+        let getContractData = await ContractModel.findOne({ where: { contractAddress: contractAddress }, attributes: ['id'] });
         if (helper.isEmpty(getContractData)) return res.status(200).json({ status: false, message: msgHelper.msg('MSG014'), data: null });
 
         let info = {}
@@ -156,14 +156,14 @@ module.exports.listTicket = (req, res) => {
             createdAt: currentDateTime,
             updatedAt: currentDateTime,
         }
-        info.where = {contractId: getContractData.dataValues.id, ticketId: ticketId};
+        info.where = { contractId: getContractData.dataValues.id, ticketId: ticketId };
 
         // check if ticket is already listed
-        let checkTicket = await NftListing.findOne({where: info.where});
-        
+        let checkTicket = await NftListing.findOne({ where: info.where });
+
         if (!helper.isEmpty(checkTicket)) {
             // update ticket price
-            let updateTicket = await NftListing.update({price: Number(price)}, {where: {contractId: getContractData.dataValues.id, ticketId: ticketId}});
+            let updateTicket = await NftListing.update({ price: Number(price) }, { where: { contractId: getContractData.dataValues.id, ticketId: ticketId } });
 
             if (!helper.isEmpty(updateTicket)) return res.status(200).json({ status: true, message: msgHelper.msg('MSG017'), data: updateTicket.dataValues });
 
@@ -173,7 +173,7 @@ module.exports.listTicket = (req, res) => {
             // console.log(createTicket);
             if (!helper.isEmpty(createTicket)) {
                 // update ticket status
-                let updateTicket = await TicketModel.update({isListed: 1}, {where: {contractId: getContractData.dataValues.id, ticketId: ticketId}});
+                let updateTicket = await TicketModel.update({ isListed: 1 }, { where: { contractId: getContractData.dataValues.id, ticketId: ticketId } });
                 if (updateTicket) {
                     return res.status(200).json({ status: true, message: msgHelper.msg('MSG017'), data: createTicket.dataValues });
                 } else {
@@ -203,9 +203,9 @@ module.exports.cancelListTicket = (req, res) => {
         let contractAddress = formData.contractAddress;
 
         let contractInfo = {}
-        contractInfo.where = {contractAddress: contractAddress};
+        contractInfo.where = { contractAddress: contractAddress };
 
-        let getContractData = await ContractModel.findOne({where: {contractAddress: contractAddress}, attributes: ['id']});
+        let getContractData = await ContractModel.findOne({ where: { contractAddress: contractAddress }, attributes: ['id'] });
         if (helper.isEmpty(getContractData)) return res.status(200).json({ status: false, message: msgHelper.msg('MSG014'), data: null });
 
         let info = {}
@@ -215,10 +215,10 @@ module.exports.cancelListTicket = (req, res) => {
             ticketId: (ticketId),
             sellerAddress: seller,
         }
-        info.where = {contractId: getContractData.dataValues.id, ticketId: ticketId};
+        info.where = { contractId: getContractData.dataValues.id, ticketId: ticketId };
 
         // check if ticket is listed
-        let checkTicket = await NftListing.findOne({where: info.where});
+        let checkTicket = await NftListing.findOne({ where: info.where });
 
         if (!helper.isEmpty(checkTicket)) {
             let sellerAddress = checkTicket.dataValues.sellerAddress;
@@ -228,10 +228,10 @@ module.exports.cancelListTicket = (req, res) => {
             if (sellerAddress != seller) return res.status(200).json({ status: false, message: msgHelper.msg('MSG014'), data: null });
 
             // remove from nft listing
-            let removeTicket = await NftListing.destroy({where: {id: nftListingID}});
+            let removeTicket = await NftListing.destroy({ where: { id: nftListingID } });
             if (!helper.isEmpty(removeTicket)) {
                 // update ticket status
-                let updateTicket = await TicketModel.update({isListed: 0}, {where: {contractId: getContractData.dataValues.id, ticketId: ticketId}});
+                let updateTicket = await TicketModel.update({ isListed: 0 }, { where: { contractId: getContractData.dataValues.id, ticketId: ticketId } });
                 if (updateTicket) {
                     return res.status(200).json({ status: true, message: msgHelper.msg('MSG017'), data: updateTicket.dataValues });
                 } else {
@@ -243,7 +243,7 @@ module.exports.cancelListTicket = (req, res) => {
         } else {
             return res.status(200).json({ status: false, message: msgHelper.msg('MSG014'), data: null });
         }
-        
+
     });
 }
 
@@ -269,9 +269,9 @@ module.exports.updateTicketPrice = (req, res) => {
         let contractAddress = formData.contractAddress;
 
         let contractInfo = {}
-        contractInfo.where = {contractAddress: contractAddress};
+        contractInfo.where = { contractAddress: contractAddress };
 
-        let getContractData = await ContractModel.findOne({where: {contractAddress: contractAddress}, attributes: ['id']});
+        let getContractData = await ContractModel.findOne({ where: { contractAddress: contractAddress }, attributes: ['id'] });
         if (helper.isEmpty(getContractData)) return res.status(200).json({ status: false, message: msgHelper.msg('MSG014'), data: null });
 
         let info = {}
@@ -280,12 +280,12 @@ module.exports.updateTicketPrice = (req, res) => {
             contractId: getContractData.dataValues.id,
             ticketId: (ticketId),
             sellerAddress: seller,
-            price: Number(price),
+            price: (price),
         }
-        info.where = {contractId: getContractData.dataValues.id, ticketId: ticketId};
+        info.where = { contractId: getContractData.dataValues.id, ticketId: ticketId };
 
         // check if ticket is listed
-        let checkTicket = await NftListing.findOne({where: info.where});
+        let checkTicket = await NftListing.findOne({ where: info.where });
 
         if (!helper.isEmpty(checkTicket)) {
             let sellerAddress = checkTicket.dataValues.sellerAddress;
@@ -297,7 +297,7 @@ module.exports.updateTicketPrice = (req, res) => {
             if (isListed == 0) return res.status(200).json({ status: false, message: msgHelper.msg('MSG014'), data: null });
 
             // update ticket price
-            let updateTicket = await NftListing.update({price: Number(price)}, {where: {id: nftListingID}});
+            let updateTicket = await NftListing.update({ price: Number(price) }, { where: { id: nftListingID } });
             if (!helper.isEmpty(updateTicket)) return res.status(200).json({ status: true, message: msgHelper.msg('MSG017'), data: updateTicket.dataValues });
 
             return res.status(200).json({ status: false, message: msgHelper.msg('MSG014'), data: null });
@@ -319,21 +319,24 @@ module.exports.getAllListedTicket = (req, res) => {
     validateData.check().then(async (matched) => {
         if (!matched) return res.status(422).json({ status: false, message: msgHelper.msg('MSG002'), error: validateData.errors });
 
-        let contractAddress = formData.contractAddress;
-        let chainId = formData.chainId;
+        try {
+            let contractAddress = formData.contractAddress;
+            let chainId = formData.chainId;
 
-        let contractInfo = {}
-        contractInfo.where = {contractAddress: contractAddress};
+            let contractInfo = {}
+            contractInfo.where = { contractAddress: contractAddress };
 
-        let getContractData = await ContractModel.findOne({where: {contractAddress: contractAddress}, attributes: ['id']});
+            let getContractData = await ContractModel.findOne({ where: { contractAddress: contractAddress }, attributes: ['id'] });
 
-        if (helper.isEmpty(getContractData)) return res.status(200).json({ status: false, message: msgHelper.msg('MSG014'), data: null });
+            if (helper.isEmpty(getContractData)) return res.status(200).json({ status: false, message: msgHelper.msg('MSG014'), data: null });
 
-        let contractId = getContractData.dataValues.id;
+            let contractId = getContractData.dataValues.id;
 
-        let allNftTicket = await NftListing.getAllTicketList(contractId);
-        if (!helper.isEmpty(allNftTicket.err)) return res.status(200).json({ status: false, message: msgHelper.msg('MSG014'), data: null });
-        return res.status(200).json({ status: true, message: msgHelper.msg('MSG017'), data: allNftTicket.data });
-        
+            let allNftTicket = await NftListing.getAllTicketList(contractId);
+            if (!helper.isEmpty(allNftTicket.err)) return res.status(200).json({ status: false, message: msgHelper.msg('MSG014'), data: null });
+            return res.status(200).json({ status: true, message: msgHelper.msg('MSG017'), data: allNftTicket.data });
+        } catch (error) {
+            return res.status(200).json({ status: false, message: msgHelper.msg('MSG014'), data: null });
+        }
     });
 }

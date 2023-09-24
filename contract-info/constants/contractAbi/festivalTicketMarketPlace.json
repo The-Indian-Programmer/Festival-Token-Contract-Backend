@@ -1,1 +1,580 @@
-[{"type":"constructor","payable":false,"inputs":[{"type":"uint256","name":"_ticketPrice"},{"type":"string","name":"_ticketName"},{"type":"string","name":"_ticketSymbol"},{"type":"uint256","name":"_totalTicket"}]},{"type":"error","name":"FestivalTicketMarketPlace__AlreadyTicketOwner","inputs":[{"type":"uint256","name":"tokenId"}]},{"type":"error","name":"FestivalTicketMarketPlace__NewPriceNotMoreThan10Percent","inputs":[]},{"type":"error","name":"FestivalTicketMarketPlace__NftNotApprovedForMarketPlace","inputs":[]},{"type":"error","name":"FestivalTicketMarketPlace__NoMoreTicketsAvailable","inputs":[]},{"type":"error","name":"FestivalTicketMarketPlace__NotHaveSufficientAmount","inputs":[{"type":"address","name":"seller"}]},{"type":"error","name":"FestivalTicketMarketPlace__NotSufficientAmount","inputs":[]},{"type":"error","name":"FestivalTicketMarketPlace__NotTicketNFTOwner","inputs":[{"type":"uint256","name":"tokenId"}]},{"type":"error","name":"FestivalTicketMarketPlace__PriceCannotBeZero","inputs":[]},{"type":"error","name":"FestivalTicketMarketPlace__TicketAlreadyListed","inputs":[{"type":"uint256","name":"tokenId"}]},{"type":"error","name":"FestivalTicketMarketPlace__TicketNotListedToSale","inputs":[]},{"type":"error","name":"FestivalTicketMarketPlace__TokenTransferFailed","inputs":[]},{"type":"error","name":"FestivalTicketMarketPlace__WithDrawFailed","inputs":[{"type":"address","name":"seller"},{"type":"uint256","name":"amount"}]},{"type":"event","anonymous":false,"name":"AmountWithDrawn","inputs":[{"type":"address","name":"seller","indexed":true},{"type":"uint256","name":"amount","indexed":false}]},{"type":"event","anonymous":false,"name":"Approval","inputs":[{"type":"address","name":"owner","indexed":true},{"type":"address","name":"approved","indexed":true},{"type":"uint256","name":"tokenId","indexed":true}]},{"type":"event","anonymous":false,"name":"ApprovalForAll","inputs":[{"type":"address","name":"owner","indexed":true},{"type":"address","name":"operator","indexed":true},{"type":"bool","name":"approved","indexed":false}]},{"type":"event","anonymous":false,"name":"Log","inputs":[{"type":"string","name":"message","indexed":false},{"type":"uint256","name":"value","indexed":false}]},{"type":"event","anonymous":false,"name":"OwnershipTransferred","inputs":[{"type":"address","name":"previousOwner","indexed":true},{"type":"address","name":"newOwner","indexed":true}]},{"type":"event","anonymous":false,"name":"TicketBought","inputs":[{"type":"address","name":"buyer","indexed":true},{"type":"uint256","name":"ticketId","indexed":true},{"type":"uint256","name":"amount","indexed":false}]},{"type":"event","anonymous":false,"name":"TicketListed","inputs":[{"type":"uint256","name":"ticketId","indexed":true},{"type":"address","name":"seller","indexed":true},{"type":"uint256","name":"price","indexed":false}]},{"type":"event","anonymous":false,"name":"TicketRemoved","inputs":[{"type":"uint256","name":"ticketId","indexed":true},{"type":"address","name":"seller","indexed":true},{"type":"uint256","name":"price","indexed":false}]},{"type":"event","anonymous":false,"name":"TicketUpdated","inputs":[{"type":"uint256","name":"ticketId","indexed":true},{"type":"address","name":"seller","indexed":true},{"type":"uint256","name":"price","indexed":false}]},{"type":"event","anonymous":false,"name":"Transfer","inputs":[{"type":"address","name":"from","indexed":true},{"type":"address","name":"to","indexed":true},{"type":"uint256","name":"tokenId","indexed":true}]},{"type":"function","name":"approve","constant":false,"payable":false,"inputs":[{"type":"address","name":"to"},{"type":"uint256","name":"tokenId"}],"outputs":[]},{"type":"function","name":"balanceOf","constant":true,"stateMutability":"view","payable":false,"inputs":[{"type":"address","name":"owner"}],"outputs":[{"type":"uint256"}]},{"type":"function","name":"buyTicket","constant":false,"stateMutability":"payable","payable":true,"inputs":[],"outputs":[{"type":"uint256","name":"ticketId"}]},{"type":"function","name":"buyTicketFromListing","constant":false,"stateMutability":"payable","payable":true,"inputs":[{"type":"uint256","name":"_ticketId"}],"outputs":[]},{"type":"function","name":"cancelTicketListing","constant":false,"payable":false,"inputs":[{"type":"uint256","name":"_ticketId"}],"outputs":[]},{"type":"function","name":"counter","constant":true,"stateMutability":"view","payable":false,"inputs":[],"outputs":[{"type":"uint256"}]},{"type":"function","name":"festivalCurrencyTicket","constant":true,"stateMutability":"view","payable":false,"inputs":[],"outputs":[{"type":"address"}]},{"type":"function","name":"getApproved","constant":true,"stateMutability":"view","payable":false,"inputs":[{"type":"uint256","name":"tokenId"}],"outputs":[{"type":"address"}]},{"type":"function","name":"getBalanceOfContract","constant":true,"stateMutability":"view","payable":false,"inputs":[],"outputs":[{"type":"uint256"}]},{"type":"function","name":"getBalanceOfSeller","constant":true,"stateMutability":"view","payable":false,"inputs":[{"type":"address","name":"seller"}],"outputs":[{"type":"uint256"}]},{"type":"function","name":"getFestivalCurrencyTicketAddress","constant":true,"stateMutability":"view","payable":false,"inputs":[],"outputs":[{"type":"address"}]},{"type":"function","name":"getFestivalMarketPlaceAddress","constant":true,"stateMutability":"view","payable":false,"inputs":[],"outputs":[{"type":"address"}]},{"type":"function","name":"getFestivalTicketNFTName","constant":true,"stateMutability":"view","payable":false,"inputs":[],"outputs":[{"type":"string"}]},{"type":"function","name":"getFestivalTicketNFTOwnerByTicketId","constant":true,"stateMutability":"view","payable":false,"inputs":[{"type":"uint256","name":"_ticketId"}],"outputs":[{"type":"address"}]},{"type":"function","name":"getFestivalTicketNFTPrice","constant":true,"stateMutability":"view","payable":false,"inputs":[{"type":"uint256","name":"_ticketId"}],"outputs":[{"type":"uint256"}]},{"type":"function","name":"getFestivalTicketNFTSymbol","constant":true,"stateMutability":"view","payable":false,"inputs":[],"outputs":[{"type":"string"}]},{"type":"function","name":"getOwner","constant":true,"stateMutability":"view","payable":false,"inputs":[],"outputs":[{"type":"address"}]},{"type":"function","name":"getTicketBalanceOfUser","constant":true,"stateMutability":"view","payable":false,"inputs":[{"type":"address","name":"user"}],"outputs":[{"type":"uint256"}]},{"type":"function","name":"getTicketListing","constant":true,"stateMutability":"view","payable":false,"inputs":[],"outputs":[{"type":"tuple[]","components":[{"type":"uint256","name":"ticketId"},{"type":"address","name":"seller"},{"type":"uint256","name":"price"}]}]},{"type":"function","name":"getTicketPrice","constant":true,"stateMutability":"view","payable":false,"inputs":[],"outputs":[{"type":"uint256"}]},{"type":"function","name":"getTicketPriceByTicketId","constant":true,"stateMutability":"view","payable":false,"inputs":[{"type":"uint256","name":"_ticketId"}],"outputs":[{"type":"uint256"}]},{"type":"function","name":"getTotalSoldTickets","constant":true,"stateMutability":"view","payable":false,"inputs":[],"outputs":[{"type":"uint256"}]},{"type":"function","name":"getTotalTickets","constant":true,"stateMutability":"view","payable":false,"inputs":[],"outputs":[{"type":"uint256"}]},{"type":"function","name":"isApprovedForAll","constant":true,"stateMutability":"view","payable":false,"inputs":[{"type":"address","name":"owner"},{"type":"address","name":"operator"}],"outputs":[{"type":"bool"}]},{"type":"function","name":"listTicketForSale","constant":false,"payable":false,"inputs":[{"type":"uint256","name":"_ticketId"},{"type":"uint256","name":"_price"}],"outputs":[]},{"type":"function","name":"name","constant":true,"stateMutability":"view","payable":false,"inputs":[],"outputs":[{"type":"string"}]},{"type":"function","name":"owner","constant":true,"stateMutability":"view","payable":false,"inputs":[],"outputs":[{"type":"address"}]},{"type":"function","name":"ownerOf","constant":true,"stateMutability":"view","payable":false,"inputs":[{"type":"uint256","name":"tokenId"}],"outputs":[{"type":"address"}]},{"type":"function","name":"renounceOwnership","constant":false,"payable":false,"inputs":[],"outputs":[]},{"type":"function","name":"safeTransferFrom","constant":false,"payable":false,"inputs":[{"type":"address","name":"from"},{"type":"address","name":"to"},{"type":"uint256","name":"tokenId"}],"outputs":[]},{"type":"function","name":"safeTransferFrom","constant":false,"payable":false,"inputs":[{"type":"address","name":"from"},{"type":"address","name":"to"},{"type":"uint256","name":"tokenId"},{"type":"bytes","name":"data"}],"outputs":[]},{"type":"function","name":"setApprovalForAll","constant":false,"payable":false,"inputs":[{"type":"address","name":"operator"},{"type":"bool","name":"approved"}],"outputs":[]},{"type":"function","name":"supportsInterface","constant":true,"stateMutability":"view","payable":false,"inputs":[{"type":"bytes4","name":"interfaceId"}],"outputs":[{"type":"bool"}]},{"type":"function","name":"symbol","constant":true,"stateMutability":"view","payable":false,"inputs":[],"outputs":[{"type":"string"}]},{"type":"function","name":"ticketListings","constant":true,"stateMutability":"view","payable":false,"inputs":[{"type":"uint256"}],"outputs":[{"type":"uint256","name":"ticketId"},{"type":"address","name":"seller"},{"type":"uint256","name":"price"}]},{"type":"function","name":"ticketPrice","constant":true,"stateMutability":"view","payable":false,"inputs":[],"outputs":[{"type":"uint256"}]},{"type":"function","name":"ticketSold","constant":true,"stateMutability":"view","payable":false,"inputs":[],"outputs":[{"type":"uint256"}]},{"type":"function","name":"tokenURI","constant":true,"stateMutability":"view","payable":false,"inputs":[{"type":"uint256","name":"tokenId"}],"outputs":[{"type":"string"}]},{"type":"function","name":"transferFrom","constant":false,"payable":false,"inputs":[{"type":"address","name":"from"},{"type":"address","name":"to"},{"type":"uint256","name":"tokenId"}],"outputs":[]},{"type":"function","name":"transferOwnership","constant":false,"payable":false,"inputs":[{"type":"address","name":"newOwner"}],"outputs":[]},{"type":"function","name":"updateTicketPrice","constant":false,"payable":false,"inputs":[{"type":"uint256","name":"_ticketId"},{"type":"uint256","name":"_newPrice"}],"outputs":[]},{"type":"function","name":"withdrawBalance","constant":false,"payable":false,"inputs":[],"outputs":[{"type":"bool"}]}]
+[
+  {
+    "type": "constructor",
+    "payable": false,
+    "inputs": [
+      { "type": "uint256", "name": "_ticketPrice" },
+      { "type": "string", "name": "_ticketName" },
+      { "type": "string", "name": "_ticketSymbol" },
+      { "type": "uint256", "name": "_totalTicket" }
+    ]
+  },
+  {
+    "type": "error",
+    "name": "FestivalTicketMarketPlace__AlreadyTicketOwner",
+    "inputs": [{ "type": "uint256", "name": "tokenId" }]
+  },
+  {
+    "type": "error",
+    "name": "FestivalTicketMarketPlace__NewPriceNotMoreThan10Percent",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "FestivalTicketMarketPlace__NftNotApprovedForMarketPlace",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "FestivalTicketMarketPlace__NoMoreTicketsAvailable",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "FestivalTicketMarketPlace__NotHaveSufficientAmount",
+    "inputs": [{ "type": "address", "name": "seller" }]
+  },
+  {
+    "type": "error",
+    "name": "FestivalTicketMarketPlace__NotSufficientAmount",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "FestivalTicketMarketPlace__NotTicketNFTOwner",
+    "inputs": [{ "type": "uint256", "name": "tokenId" }]
+  },
+  {
+    "type": "error",
+    "name": "FestivalTicketMarketPlace__PriceCannotBeZero",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "FestivalTicketMarketPlace__TicketAlreadyListed",
+    "inputs": [{ "type": "uint256", "name": "tokenId" }]
+  },
+  {
+    "type": "error",
+    "name": "FestivalTicketMarketPlace__TicketNotListedToSale",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "FestivalTicketMarketPlace__TokenTransferFailed",
+    "inputs": []
+  },
+  {
+    "type": "error",
+    "name": "FestivalTicketMarketPlace__WithDrawFailed",
+    "inputs": [
+      { "type": "address", "name": "seller" },
+      { "type": "uint256", "name": "amount" }
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
+    "name": "AmountWithDrawn",
+    "inputs": [
+      { "type": "address", "name": "seller", "indexed": true },
+      { "type": "uint256", "name": "amount", "indexed": false }
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
+    "name": "Approval",
+    "inputs": [
+      { "type": "address", "name": "owner", "indexed": true },
+      { "type": "address", "name": "approved", "indexed": true },
+      { "type": "uint256", "name": "tokenId", "indexed": true }
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
+    "name": "ApprovalForAll",
+    "inputs": [
+      { "type": "address", "name": "owner", "indexed": true },
+      { "type": "address", "name": "operator", "indexed": true },
+      { "type": "bool", "name": "approved", "indexed": false }
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
+    "name": "Log",
+    "inputs": [
+      { "type": "string", "name": "message", "indexed": false },
+      { "type": "uint256", "name": "value", "indexed": false }
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
+    "name": "OwnershipTransferred",
+    "inputs": [
+      { "type": "address", "name": "previousOwner", "indexed": true },
+      { "type": "address", "name": "newOwner", "indexed": true }
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
+    "name": "TicketBought",
+    "inputs": [
+      { "type": "address", "name": "buyer", "indexed": true },
+      { "type": "uint256", "name": "ticketId", "indexed": true },
+      { "type": "uint256", "name": "amount", "indexed": false }
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
+    "name": "TicketListed",
+    "inputs": [
+      { "type": "uint256", "name": "ticketId", "indexed": true },
+      { "type": "address", "name": "seller", "indexed": true },
+      { "type": "uint256", "name": "price", "indexed": false }
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
+    "name": "TicketRemoved",
+    "inputs": [
+      { "type": "uint256", "name": "ticketId", "indexed": true },
+      { "type": "address", "name": "seller", "indexed": true },
+      { "type": "uint256", "name": "price", "indexed": false }
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
+    "name": "TicketUpdated",
+    "inputs": [
+      { "type": "uint256", "name": "ticketId", "indexed": true },
+      { "type": "address", "name": "seller", "indexed": true },
+      { "type": "uint256", "name": "price", "indexed": false }
+    ]
+  },
+  {
+    "type": "event",
+    "anonymous": false,
+    "name": "Transfer",
+    "inputs": [
+      { "type": "address", "name": "from", "indexed": true },
+      { "type": "address", "name": "to", "indexed": true },
+      { "type": "uint256", "name": "tokenId", "indexed": true }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "approve",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      { "type": "address", "name": "to" },
+      { "type": "uint256", "name": "tokenId" }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "balanceOf",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [{ "type": "address", "name": "owner" }],
+    "outputs": [{ "type": "uint256" }]
+  },
+  {
+    "type": "function",
+    "name": "buyTicket",
+    "constant": false,
+    "stateMutability": "payable",
+    "payable": true,
+    "inputs": [],
+    "outputs": [{ "type": "uint256", "name": "ticketId" }]
+  },
+  {
+    "type": "function",
+    "name": "buyTicketFromListing",
+    "constant": false,
+    "stateMutability": "payable",
+    "payable": true,
+    "inputs": [{ "type": "uint256", "name": "_ticketId" }],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "cancelTicketListing",
+    "constant": false,
+    "payable": false,
+    "inputs": [{ "type": "uint256", "name": "_ticketId" }],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "counter",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [{ "type": "uint256" }]
+  },
+  {
+    "type": "function",
+    "name": "festivalCurrencyTicket",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [{ "type": "address" }]
+  },
+  {
+    "type": "function",
+    "name": "getApproved",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [{ "type": "uint256", "name": "tokenId" }],
+    "outputs": [{ "type": "address" }]
+  },
+  {
+    "type": "function",
+    "name": "getBalanceOfContract",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [{ "type": "uint256" }]
+  },
+  {
+    "type": "function",
+    "name": "getBalanceOfSeller",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [{ "type": "address", "name": "seller" }],
+    "outputs": [{ "type": "uint256" }]
+  },
+  {
+    "type": "function",
+    "name": "getFestivalCurrencyTicketAddress",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [{ "type": "address" }]
+  },
+  {
+    "type": "function",
+    "name": "getFestivalMarketPlaceAddress",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [{ "type": "address" }]
+  },
+  {
+    "type": "function",
+    "name": "getFestivalTicketNFTName",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [{ "type": "string" }]
+  },
+  {
+    "type": "function",
+    "name": "getFestivalTicketNFTOwnerByTicketId",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [{ "type": "uint256", "name": "_ticketId" }],
+    "outputs": [{ "type": "address" }]
+  },
+  {
+    "type": "function",
+    "name": "getFestivalTicketNFTPrice",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [{ "type": "uint256", "name": "_ticketId" }],
+    "outputs": [{ "type": "uint256" }]
+  },
+  {
+    "type": "function",
+    "name": "getFestivalTicketNFTSymbol",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [{ "type": "string" }]
+  },
+  {
+    "type": "function",
+    "name": "getOwner",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [{ "type": "address" }]
+  },
+  {
+    "type": "function",
+    "name": "getTicketBalanceOfUser",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [{ "type": "address", "name": "user" }],
+    "outputs": [{ "type": "uint256" }]
+  },
+  {
+    "type": "function",
+    "name": "getTicketListing",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [
+      {
+        "type": "tuple[]",
+        "components": [
+          { "type": "uint256", "name": "ticketId" },
+          { "type": "address", "name": "seller" },
+          { "type": "uint256", "name": "price" }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "getTicketPrice",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [{ "type": "uint256" }]
+  },
+  {
+    "type": "function",
+    "name": "getTicketPriceByTicketId",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [{ "type": "uint256", "name": "_ticketId" }],
+    "outputs": [{ "type": "uint256" }]
+  },
+  {
+    "type": "function",
+    "name": "getTotalSoldTickets",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [{ "type": "uint256" }]
+  },
+  {
+    "type": "function",
+    "name": "getTotalTickets",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [{ "type": "uint256" }]
+  },
+  {
+    "type": "function",
+    "name": "isApprovedForAll",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [
+      { "type": "address", "name": "owner" },
+      { "type": "address", "name": "operator" }
+    ],
+    "outputs": [{ "type": "bool" }]
+  },
+  {
+    "type": "function",
+    "name": "listTicketForSale",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      { "type": "uint256", "name": "_ticketId" },
+      { "type": "uint256", "name": "_price" }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "name",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [{ "type": "string" }]
+  },
+  {
+    "type": "function",
+    "name": "owner",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [{ "type": "address" }]
+  },
+  {
+    "type": "function",
+    "name": "ownerOf",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [{ "type": "uint256", "name": "tokenId" }],
+    "outputs": [{ "type": "address" }]
+  },
+  {
+    "type": "function",
+    "name": "renounceOwnership",
+    "constant": false,
+    "payable": false,
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "safeTransferFrom",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      { "type": "address", "name": "from" },
+      { "type": "address", "name": "to" },
+      { "type": "uint256", "name": "tokenId" }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "safeTransferFrom",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      { "type": "address", "name": "from" },
+      { "type": "address", "name": "to" },
+      { "type": "uint256", "name": "tokenId" },
+      { "type": "bytes", "name": "data" }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "setApprovalForAll",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      { "type": "address", "name": "operator" },
+      { "type": "bool", "name": "approved" }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "supportsInterface",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [{ "type": "bytes4", "name": "interfaceId" }],
+    "outputs": [{ "type": "bool" }]
+  },
+  {
+    "type": "function",
+    "name": "symbol",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [{ "type": "string" }]
+  },
+  {
+    "type": "function",
+    "name": "ticketListings",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [{ "type": "uint256" }],
+    "outputs": [
+      { "type": "uint256", "name": "ticketId" },
+      { "type": "address", "name": "seller" },
+      { "type": "uint256", "name": "price" }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "ticketPrice",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [{ "type": "uint256" }]
+  },
+  {
+    "type": "function",
+    "name": "ticketSold",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [],
+    "outputs": [{ "type": "uint256" }]
+  },
+  {
+    "type": "function",
+    "name": "tokenURI",
+    "constant": true,
+    "stateMutability": "view",
+    "payable": false,
+    "inputs": [{ "type": "uint256", "name": "tokenId" }],
+    "outputs": [{ "type": "string" }]
+  },
+  {
+    "type": "function",
+    "name": "transferFrom",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      { "type": "address", "name": "from" },
+      { "type": "address", "name": "to" },
+      { "type": "uint256", "name": "tokenId" }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "transferOwnership",
+    "constant": false,
+    "payable": false,
+    "inputs": [{ "type": "address", "name": "newOwner" }],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "updateTicketPrice",
+    "constant": false,
+    "payable": false,
+    "inputs": [
+      { "type": "uint256", "name": "_ticketId" },
+      { "type": "uint256", "name": "_newPrice" }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "withdrawBalance",
+    "constant": false,
+    "payable": false,
+    "inputs": [],
+    "outputs": [{ "type": "bool" }]
+  }
+]

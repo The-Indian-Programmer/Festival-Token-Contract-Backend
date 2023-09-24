@@ -21,19 +21,13 @@ const webSocketContract = new ethers.Contract(contractAddress, abi, webSocketPro
 
 const TicketController = require('../controllers/Ticket.controller.js');
 
-
-
-
-webSocketContract.on("TicketBought", (buyer, ticketId, amount) => {
-    console.log("TicketBought event fired");
-    TicketController.buyTicket({buyer, ticketId, amount, contractAddress});
-});
+const contractFunction = contract.interface;
 
 
 /* Ticket Price */
 async function getPrice() {
     try {
-      const price = await contract.getTicketPrice();
+      const price = await contract['getTicketPrice']()
       if (!helper.isEmpty(price)) {
         let newPrice = ethers.formatUnits(price, 18);
         return newPrice;
@@ -42,7 +36,7 @@ async function getPrice() {
       console.error('Error calling getPrice:', error);
       return null;
     }
-  }
+}
 
 /* soldTickets */
 async function getSoldTickets() {
